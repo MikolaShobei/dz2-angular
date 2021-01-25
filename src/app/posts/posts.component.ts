@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Ipost} from '../interfaces';
+import {PostsService} from '../services/posts.service';
 
 
 @Component({
@@ -11,16 +12,16 @@ import {Ipost} from '../interfaces';
 export class PostsComponent implements OnInit {
   posts: Ipost[];
   choseOnePost: Ipost;
-  constructor(private httpClient: HttpClient) {
+
+  constructor(private postsService: PostsService) {
   }
 
   ngOnInit(): void {
-    this
-      .httpClient
-      .get<Ipost[]>('https://jsonplaceholder.typicode.com/posts')
-      .subscribe(value => this.posts = value);
+    this.postsService.getUsers().subscribe(value => this.posts = value);
+
   }
-  getPost(post: Ipost): void{
+
+  getPost(post: Ipost): void {
     this.choseOnePost = post;
   }
 }
